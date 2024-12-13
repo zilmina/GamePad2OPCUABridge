@@ -11,6 +11,13 @@ OPC UAクライアントは、本プログラムで公開されるノードへ�
 - カウント用の変数 (`iCount`) を継続的にインクリメントし、OPC UAノードとして公開（サンプル的なカウンタ機能）  
 - モニタリング用のサンプリング間隔を1msに設定することで、ボタン状態変化をより即時性の高い形で取得可能
 
+## Install for Win11
+
+Install Python
+- pip install numpy
+- pip install opcua
+- pip install pygame
+
 ## OPC UAアドレススペース仕様
 
 ### 接続情報
