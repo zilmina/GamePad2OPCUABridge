@@ -22,6 +22,7 @@
 #
 
 import numpy as np
+
 # import for UPCUA
 import sys
 sys.path.insert(0, "..")
@@ -30,7 +31,6 @@ from opcua import ua, Server
 
 # import for pygame
 import pygame
-from smbus2 import SMBus
 import os
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 
