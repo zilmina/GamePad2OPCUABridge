@@ -41,7 +41,7 @@ if __name__ == "__main__":
     # モニタリング用のデフォルトサンプリング間隔を100ms以下に設定
     server.default_monitored_item_sampling_interval = 1  # 単位: ミリ秒
 
-    server.set_endpoint("opc.tcp://0.0.0.0:4840/freeopcua/server/")
+    server.set_endpoint("opc.tcp://0.0.0.0:4841/gamepad/server/")
 
     # setup our own namespace, not really necessary but should as spec
     uri = "https://github.com/zilmina/GamePad2OPCUABridge"
@@ -88,10 +88,14 @@ if __name__ == "__main__":
             #     print(event)
             count += 1
             iCount.set_value(ua.Variant(np.uint32(count),ua.VariantType.UInt32))
+            iCount.set_array_dimensions([1])
+            iCount.set_value_rank(1)
             # print("{:.1f}".format(count)) #カウントアップ値を表示
             button_count = joys.get_numbuttons()
             button_states = [joys.get_button(i) for i in range(button_count)]
             bButtons.set_value(ua.Variant(button_states,ua.VariantType.Boolean))
+            bButtons.set_array_dimensions([button_count])
+            bButtons.set_value_rank(1)
             # print(f"ボタン状態: {button_states}")
     finally:
         #close connection, remove subcsriptions, etc
