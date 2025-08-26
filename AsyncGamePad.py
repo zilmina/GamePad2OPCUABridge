@@ -22,7 +22,7 @@ async def main():
     pygame.init()
     bActiveGamepad = False
     bButtonsVar = None
-    dAxesVar = None  # 修正: fAxesVar → dAxesVar
+    dAxesVar = None  
     buttonCount = 0
     axisCount = 0
 
@@ -49,15 +49,15 @@ async def main():
 
             # 配列の次元と固定長を設定
             await bButtonsVar.write_array_dimensions([buttonCount])
-            await dAxesVar.write_array_dimensions([axisCount])  # 修正: fAxesVar → dAxesVar
+            await dAxesVar.write_array_dimensions([axisCount]) 
 
             # ValueRankを設定（1次元配列であることを明示）
             await bButtonsVar.write_value_rank(1)
-            await dAxesVar.write_value_rank(1)  # 修正: fAxesVar → dAxesVar
+            await dAxesVar.write_value_rank(1)  
 
             # 書き込み可能に設定
             await bButtonsVar.set_writable()
-            await dAxesVar.set_writable()  # 修正: fAxesVar → dAxesVar
+            await dAxesVar.set_writable() 
 
             bActiveGamepad = True
         except pygame.error:
@@ -67,7 +67,7 @@ async def main():
     async with server:
         try:
             while True:
-                await asyncio.sleep(0.01)
+                await asyncio.sleep(0.0001)
                 pygame.event.pump()
 
                 # 動作時間の計測開始
@@ -75,15 +75,16 @@ async def main():
 
                 # ボタンと軸の状態を取得（接続時の値に基づく）
                 bButtons = [bool(joys.get_button(i)) for i in range(buttonCount)]
-                dAxes = [joys.get_axis(i) for i in range(axisCount)]  # 修正: fAxes → dAxes
+                dAxes = [joys.get_axis(i) for i in range(axisCount)]  
 
                 # 動作時間の計測終了
                 elapsed_time_ms = (time.monotonic() - start_time) * 1000000  # ミリ秒に変換
-                # print(f"bButtons, dAxes取得時間: {elapsed_time_ms:.3f} ms")  # 修正: fAxes → dAxes
+                # print(f"bButtons, dAxes取得時間: {elapsed_time_ms:.3f} ms")  
 
                 # 値を更新
                 await bButtonsVar.write_value(bButtons)
-                await dAxesVar.write_value(dAxes)  # 修正: fAxesVar → dAxesVar
+                await dAxesVar.write_value(dAxes)  
+                # print(f"ボタン状態: {bButtons}")
 
         except asyncio.CancelledError:
             pass
